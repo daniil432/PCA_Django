@@ -45,9 +45,10 @@ def InputPage(request):
             test_4.eigenvalues_and_vectors()
             "Получаем Т и Р матрицы, они нужны для постройки графиков"
             t_matrix, p_matrix = test_4.t_and_p_matrix()
-            "Посчитаем производную от входной матрицы, а затем производную от производной"
+            "Посчитаем производную от входной матрицы"
             test_5 = Derivative(input_matrix)
             first_deriv = test_5.calc_derivative()
+            "Посчитаем вторую производную от входной матрицы"
             test_5 = Derivative(first_deriv)
             second_deriv = test_5.calc_derivative()
             return HttpResponse(f'<p>Success</p>')
