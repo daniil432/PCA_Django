@@ -4,7 +4,6 @@ class SortAndCalcRatio(object):
         self.waves = waves
         self.filenames = filenames
 
-
     def sort_ratio_and_waves(self):
         "Сортируем все интенсивности из фаилов по донорам, секретирующим и несекретирующим пациентам"
         self.sorted_patients = {
@@ -29,7 +28,7 @@ class SortAndCalcRatio(object):
             else:
                 pass
 
-    def calculate_ratio(self):
+    def calculate_average(self):
         calculated_patients = {
             'donor': [0],
             'donor_waves': [0],
@@ -38,7 +37,7 @@ class SortAndCalcRatio(object):
             'non_secreting': [0],
             'non_secreting_waves': [0]
         }
-        normalization = []
+        self.normalization = []
         for key in calculated_patients:
             calculated_patients[key] = calculated_patients[key] * len(self.sorted_patients[key][0])
         for key in self.sorted_patients:
@@ -49,7 +48,17 @@ class SortAndCalcRatio(object):
                 if len(self.sorted_patients[key]) != 0:
                     calculated_patients[key][i] = calculated_patients[key][i] / len(self.sorted_patients[key])
                     if key == 'donor':
-                        normalization.append(1/calculated_patients[key][i])
+                        self.normalization.append(1/calculated_patients[key][i])
                     if (key == 'donor') or (key == 'patient') or (key == 'non_secreting'):
-                        calculated_patients[key][i] = calculated_patients[key][i] * normalization[i]
+                        calculated_patients[key][i] = calculated_patients[key][i] * self.normalization[i]
+        print('[PCA]: average calculated')
         return calculated_patients
+
+    def calculate_samples(self):
+        for key in self.sorted_patients:
+            if (key == 'donor') or (key == 'patient') or (key == 'non_secreting'):
+                for li in range(len(self.sorted_patients[key])):
+                    for el in range(len(self.sorted_patients[key][li])):
+                        self.sorted_patients[key][li][el] = self.sorted_patients[key][li][el] * self.normalization[el]
+        print('[PCA]: samples calculated')
+        return self.sorted_patients

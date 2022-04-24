@@ -94,5 +94,9 @@ class PcaAnalyzation(object):
         "находим матрицы T и P"
         t_matrix = u_vectors @ s_matrix
         p_matrix = v_vectors
+        for el in range(len(t_matrix)):
+            t_matrix[el] = list(t_matrix[el])
+        for el in range(len(p_matrix)):
+            p_matrix[el] = list(p_matrix[el])
         # g = u_vectors @ s_matrix @ v_vectors
-        return t_matrix, p_matrix
+        return list(t_matrix), list(p_matrix)

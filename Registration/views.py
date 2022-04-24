@@ -17,4 +17,4 @@ def register(request):
             return HttpResponseRedirect('InputPage', {'new_user': new_user}, RequestContext(request))
     else:
         user_form = UserRegistrationForm()
-    return render(request, 'Registration.html', {'user_form': user_form})
+    return render(request, 'Registration/Registration.html', {'user_form': user_form})

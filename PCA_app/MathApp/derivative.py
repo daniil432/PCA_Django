@@ -1,4 +1,3 @@
-import numpy as np
 import copy
 
 
@@ -9,7 +8,7 @@ class Derivative(object):
     def calc_derivative(self):
         all_derivatives = []
         "Создаем копию списка волновых чисел и помещаем перед списком всех производных, которые далее будут рассчитаны"
-        all_derivatives.append(copy.deepcopy(self.data_deriv[0].tolist()))
+        all_derivatives.append(copy.deepcopy(list(self.data_deriv[0])))
         for sample in range(len(self.data_deriv)):
             sample_derivative = []
             if sample == 0:
@@ -39,10 +38,9 @@ class Derivative(object):
                         "Получили производную для одного набора точек"
                         sample_derivative.append(deriv)
                 "Присоединяем одну производную к списку всех производных"
-                all_derivatives.append(np.array(sample_derivative))
+                all_derivatives.append(sample_derivative)
         "Вырезаем из списка волновых чисел крайние точки, чтобы длина совпадала с длиной производной"
         all_derivatives[0].pop(0)
         all_derivatives[0].pop(len(all_derivatives[0]) - 1)
-        all_derivatives[0] = np.array(all_derivatives[0])
         "Получили список волновых чисел на 0-й позиции и производные от искомого набора данных на остальных позициях"
         return all_derivatives

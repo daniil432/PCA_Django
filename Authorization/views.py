@@ -21,19 +21,19 @@ def authorization(request):
                 return HttpResponse('Invalid login')
     else:
         form = LoginForm()
-    return render(request, 'Authorization.html', {'form': form})
+    return render(request, 'Authorization/Authorization.html', {'form': form})
 
 
 def AboutView(request):
     context = {'AboutUs': 'AboutUs.html'}
-    return render(request, 'AboutUs.html', context)
+    return render(request, 'Authorization/AboutUs.html', context)
 
 
 def HomepageView(request):
     context = {'Homepage': 'Homepage.html'}
-    return render(request, 'Homepage.html', context)
+    return render(request, 'Authorization/Homepage.html', context)
 
 
 def MembersView(request):
     context = {'Members': 'Members.html'}
-    return render(request, 'Members.html', context)
+    return render(request, 'Authorization/Members.html', context)

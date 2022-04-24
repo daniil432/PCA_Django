@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}
+    {% endblock %}
+</head>
+<body class="BodyHtml">
+<header class="HeadElement">
+    <div class="WelcomeText">
+        <p>
+            Welcome!
+        </p>
+    </div>
+    <div class="InfoBox">
+        <ul class="InfoElements">
+            <li class="FirstEl">
+                <a href={{ 'Homepage' }}>
+                    Homepage
+                </a>
+            </li>
+            <li class="SecondEl">
+                <a href={{ 'AboutUs' }}>
+                    About us
+                </a>
+            </li>
+            <li class="ThirdEl">
+                <a href={{ 'Members' }}>
+                    Members
+                </a>
+            </li>
+        </ul>
+    </div>
+</header>
+{% block content %}
+{% endblock %}
+</body>
+</html>
+<style>
+    .HeadElement {
+        position: relative;
+        background: linear-gradient(rgba(52, 97, 246, 0.7), rgba(54, 201, 231, 0.7));
+        border: solid 1px grey;
+        font-size: calc(16px + 6 * ((100vw - 320px) / 680));
+        min-height: 8vh;
+        padding-left: 1vh;
+        padding-right: 1vh;
+    }
+
+    .WelcomeText {
+        display: inline-block;
+        width: 8%;
+    }
+
+    .InfoBox {
+        display: inline-block;
+        float: right;
+        max-height: 8vh;
+    }
+
+    .FirstEl {
+        display: inline;
+    }
+
+    .SecondEl {
+        display: inline;
+    }
+
+    .ThirdEl {
+        display: inline;
+    }
+
+    .FirstEl :after {
+        content: "|";
+        font-size: calc(16px + 6 * ((100vw - 320px) / 680));
+    }
+
+    .SecondEl :after {
+        content: "|";
+        font-size: calc(16px + 6 * ((100vw - 320px) / 680));
+    }
+
+    {% block style %}
+    {% endblock %}
+</style>

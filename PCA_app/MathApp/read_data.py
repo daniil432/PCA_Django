@@ -1,5 +1,3 @@
-import os
-import glob
 import pandas as pd
 import numpy as np
 import copy
@@ -22,13 +20,13 @@ class ReadingFromFiles(object):
         "Считываем файлы из БД"
         for j in range(len(self.path_type_list)):
             file_path = self.path_type_list[j]['patient_path']
-            filename = self.path_type_list[j]['patient_type']
+            filename = self.path_type_list[j]['patient_type'] + str(self.path_type_list[j]['patient_number'])
             input_df = pd.read_csv(file_path, header=None)
             input_df_list.append(input_df)
             "Важная для обработки информация - список пациентов. В дальнешем нужен для корректного отображения графиков"
             filenames.append(filename)
+        print('[PCA]: files was read')
         return input_df_list, filenames
-
 
     def cut_files(self):
         input_matrix = []

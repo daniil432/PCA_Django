@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -26,7 +27,9 @@ INSTALLED_APPS = [
     'Authorization.apps.AuthorizationConfig',
     'Registration.apps.RegistrationConfig',
     'PCA_app.apps.PcaAppConfig',
-    'PCA_app.MathApp.apps.MathappConfig'
+    'PCA_app.MathApp.apps.MathappConfig',
+    'Graph_App.apps.GraphAppConfig',
+
 ]
 
 MIDDLEWARE = [
@@ -44,7 +47,7 @@ ROOT_URLCONF = 'PCA_proj.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
