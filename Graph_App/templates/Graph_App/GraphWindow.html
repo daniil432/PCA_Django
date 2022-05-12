@@ -40,8 +40,7 @@
                         {{ data }}
                     </p>
                     <div class="PlotDiv">
-                        <p id='alldata'></p>
-                        <div id="myPlot"></div>
+                        <div class="Plot" id="myPlot"></div>
                         <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
                         <script>
                             var x_y_data = JSON.parse("{{x_y_data|escapejs}}");
@@ -61,13 +60,12 @@
 
                             // Define Layout
                             var layout = {
-                                xaxis: {title: "PC1"},
-                                yaxis: {title: "PC2"},
-                                title: "Graph in PC1-PC2 coordinates"
+                                xaxis: {title: "PC{{ data.0 }}"},
+                                yaxis: {title: "PC{{ data.1 }}"},
+                                title: "Graph in PC{{ data.0 }}-PC{{ data.1 }} coordinates",
+                                width: 1200,
+                                height: 370,
                             };
-
-                            var dataNode = document.getElementById('alldata');
-                            dataNode.innerHTML += "{{data}}";
 
                             // Display using Plotly
                             Plotly.newPlot("myPlot", data, layout);
@@ -75,8 +73,7 @@
                     </div>
                     </div>
                 {% elif condition == 0 %}
-                    <div id="myPlot"></div>
-                    <p id='alldata'></p>
+                    <div class="Plot" id="myPlot"></div>
                     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
                     <script>
                         var x_y_data = JSON.parse("{{x_y_data|escapejs}}");
@@ -101,8 +98,6 @@
                             title: "Graph in PC1-PC2 coordinates"
                         };
 
-                        var dataNode = document.getElementById('alldata');
-                        dataNode.innerHTML += "{{data}}";
 
                         // Display using Plotly
                         Plotly.newPlot("myPlot", data, layout);
@@ -152,6 +147,7 @@
 
         .InputDiv {
         }
+
     </style>
 
 {% endblock %}

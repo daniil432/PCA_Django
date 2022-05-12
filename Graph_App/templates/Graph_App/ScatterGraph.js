@@ -1,30 +1,25 @@
-var xArray = x_y_data;
-var yArray = x_y_data;
-
-// Define Data
-var data1 = {
-    x: xArray['donor'][0],
-    y: yArray['donor'][1],
-    mode: "markers",
-    type: 'scatter',
-    name: '1'
-};
-
-var data2 = {
-    x: xArray['myeloma'][0],
-    y: yArray['myeloma'][1],
-    mode: "markers",
-    type: 'scatter',
-    name: '2'
-};
-
-var data = [data1, data2];
+var x_y_data = JSON.parse('{{x_y_data|escapejs}}');
+var data = [];
+for (var x in x_y_data) {
+    var xArray = x_y_data[x][0];
+    var yArray = x_y_data[x][1];
+    var temp = {
+        x: xArray,
+        y: yArray,
+        mode: "markers",
+        type: 'scatter',
+        name: x
+    };
+    data.push(temp);
+}
 
 // Define Layout
 var layout = {
-    xaxis: {title: "PC1"},
-    yaxis: {title: "PC2"},
-    title: "Graph in PC1-PC2 coordinates"
+    xaxis: {title: "PC{{ data.0 }}"},
+    yaxis: {title: "PC{{ data.1 }}"},
+    title: "Graph in PC{{ data.0 }}-PC{{ data.1 }} coordinates",
+    width: 1200,
+    height: 370,
 };
 
 // Display using Plotly
