@@ -4,12 +4,15 @@
     <title>
         GraphPage
     </title>
+    {% load static %}
+    <link type="text/css" href="{% static 'Graph_App/css/GraphWindow.css' %}" rel="stylesheet">
 {% endblock %}
 {% block content %}
+    <h1 align="center">
+        Расчёты произведены. Выберите необходимую опцию:
+    </h1>
     <div class='MainFuncDiv'>
-        <h1 align="center">
-            Расчёты произведены. Выберите необходимую опцию:
-        </h1>
+
         <div class='FuncDiv'>
             <div class='ButtonDiv'>
                 {% for i in buttons.name %}
@@ -40,114 +43,53 @@
                         {{ data }}
                     </p>
                     <div class="PlotDiv">
-                        <div class="Plot" id="myPlot"></div>
-                        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-                        <script>
-                            var x_y_data = JSON.parse("{{x_y_data|escapejs}}");
-                            var data = [];
-                            for (var x in x_y_data) {
-                                var xArray = x_y_data[x][0];
-                                var yArray = x_y_data[x][1];
-                                var temp = {
-                                    x: xArray,
-                                    y: yArray,
-                                    mode: "markers",
-                                    type: 'scatter',
-                                    name: x
-                                };
-                                data.push(temp);
-                            }
+                        <div class="Plot" id="myPlot">
+                        {% if data %}
+                            {% load static %}
+                            <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+                            {% if param == 1 %}
+                                <script>
+                                    var x_y_data = JSON.parse('{{x_y_data|escapejs}}');
+                                    var data = [];
+                                    var xtitle = {title: "PC{{ data.0 }}"};
+                                    var ytitle = {title: "PC{{ data.1 }}"};
+                                    var maintitle = "Graph in PC{{ data.0 }}-PC{{ data.1 }} coordinates"
+                                </script>
+                                <script type="text/javascript"
+                                        src={% static "Graph_App/js/Scatter2DGraph.js" %}></script>
+                            {% elif param == 2 %}
+                                <script>
+                                    var x_y_data = JSON.parse('{{x_y_data|escapejs}}');
+                                    var data = [];
+                                    var xtitle = {title: "Wavenumbers"};
+                                    var ytitle = {title: "PC{{ data.0 }}"};
+                                    var maintitle = "Graph for PC{{ data.0 }} loadings to wavenumbers."
+                                </script>
+                                <script type="text/javascript"
+                                        src={% static "Graph_App/js/LoadingsGraph.js" %}></script>
+                            {% elif param == 3 %}
+                                <script>
+                                    var x_y_data = JSON.parse('{{x_y_data|escapejs}}');
+                                    var data = [];
+                                    var xtitle = {title: "PC{{ data.0 }}"};
+                                    var ytitle = {title: "PC{{ data.1 }}"};
+                                    var ztitle = {title: "PC{{ data.2 }}"};
+                                    var maintitle = "Graph in PC{{ data.0 }}-PC{{ data.1 }}-PC{{ data.2 }} coordinates"
+                                </script>
+                                <script type="text/javascript"
+                                        src={% static "Graph_App/js/Scatter3DGraph.js" %}></script>
+                            {% endif %}
 
-                            // Define Layout
-                            var layout = {
-                                xaxis: {title: "PC{{ data.0 }}"},
-                                yaxis: {title: "PC{{ data.1 }}"},
-                                title: "Graph in PC{{ data.0 }}-PC{{ data.1 }} coordinates",
-                                width: 1200,
-                                height: 370,
-                            };
+                        {% endif %}
+                        </div>
+                    </div>
 
-                            // Display using Plotly
-                            Plotly.newPlot("myPlot", data, layout);
-                        </script>
-                    </div>
-                    </div>
                 {% elif condition == 0 %}
-                    <div class="Plot" id="myPlot"></div>
-                    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-                    <script>
-                        var x_y_data = JSON.parse("{{x_y_data|escapejs}}");
-                        var data = [];
-                        for (var x in x_y_data) {
-                            var xArray = x_y_data[x][0];
-                            var yArray = x_y_data[x][1];
-                            var temp = {
-                                x: xArray,
-                                y: yArray,
-                                mode: "markers",
-                                type: 'scatter',
-                                name: x
-                            };
-                            data.push(temp);
-                        }
-
-                        // Define Layout
-                        var layout = {
-                            xaxis: {title: "PC1"},
-                            yaxis: {title: "PC2"},
-                            title: "Graph in PC1-PC2 coordinates"
-                        };
-
-
-                        // Display using Plotly
-                        Plotly.newPlot("myPlot", data, layout);
-                    </script>
+                    <div class="PlotDiv">
+                        <div class="Plot" id="myPlot"></div>
+                    </div>
                 {% endif %}
+            </div>
         </div>
     </div>
-{% endblock %}
-{% block style %}
-    <style>
-        .MainFuncDiv {
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-        }
-
-        .FuncDiv {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            border: solid black 1px;
-        }
-
-        .ButtonDiv {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            border: solid black 1px;
-            padding: 7vh 1%;
-            height: 40vh;
-        }
-
-        .PlotAndInputDiv {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .InputForm {
-            margin: 0 auto;
-        }
-
-        .PlotDiv {
-            width: 70vw;
-            height: 40vh;
-        }
-
-        .InputDiv {
-        }
-
-    </style>
-
 {% endblock %}

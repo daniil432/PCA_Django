@@ -39,9 +39,9 @@ class ReadingFromFiles(object):
                 input_df_temp = input_df.drop(input_df[input_df[0] < self.input_waves[i][0]].index)
                 input_df_temp = input_df_temp.drop(input_df_temp[input_df_temp[0] > self.input_waves[i][1]].index)
                 one_pat = np.concatenate((one_pat, input_df_temp[1].values.astype('float')))
-            "Та матрица, с которй дальше работаем при помощи метода главных компонент"
+            "Та матрица, с которой дальше работаем при помощи метода главных компонент"
             input_matrix.append(one_pat)
-        "Диапазон долновых чисел, с которыми работаем. Нужен при рассчете производной от спектров"
+        "Диапазон волновых чисел, с которыми работаем. Нужен при расчете производной от спектров"
         one_wave = []
         for i in range(len(self.input_waves)):
             input_df = pd.read_csv(self.path_type_list[1]['patient_path'], header=None)

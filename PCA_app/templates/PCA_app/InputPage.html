@@ -3,6 +3,8 @@
     <title>
         InputPage
     </title>
+{% load static %}
+    <link type="text/css" href='{% static "PCA_app/css/InputPage.css" %}' rel="stylesheet">
 {% endblock %}
 {% block content %}
     <div class="MainDiv">
@@ -22,33 +24,4 @@
             </div>
         </form>
     </div>
-{% endblock %}
-{% block style %}
-    .MainDiv {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    justify-items: center;
-    font-size: 20px;
-    height: 100vh;
-    width: 100vw;
-    }
-
-    .First {
-    margin: 10px;
-    }
-
-    .Second {
-    margin: 10px;
-    }
-
-    .Button {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    justify-items: center;
-    margin: 0 auto;
-    }
 {% endblock %}

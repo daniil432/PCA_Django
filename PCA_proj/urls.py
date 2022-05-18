@@ -6,6 +6,6 @@ urlpatterns = [
     path('admin', admin.site.urls),
     path('InputPage', include('PCA_app.urls')),
     path('Register', include('Registration.urls')),
-    path('Graph/', include('Graph_App.urls')),
+    path('Graph_App/', include('Graph_App.urls')),
 
 ]

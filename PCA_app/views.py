@@ -18,7 +18,7 @@ def InputPage(request):
             second = cd['second_number']
             request.session['first'] = first
             request.session['second'] = second
-            return HttpResponseRedirect('Graph', {'form': form}, RequestContext(request))
+            return HttpResponseRedirect('Graph_App', {'form': form}, RequestContext(request))
     else:
         form = DiapasonForm()
     return render(request, 'PCA_app/InputPage.html', {'form': form})

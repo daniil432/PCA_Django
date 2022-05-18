@@ -92,8 +92,13 @@ class PcaAnalyzation(object):
             s_matrix[index][index] = (abs(eigenvalues[index])) ** (1 / 2)
 
         "находим матрицы T и P"
-        t_matrix = u_vectors @ s_matrix
-        p_matrix = v_vectors
+        if len(u_values) > len(v_values):
+            t_matrix = v_vectors @ s_matrix
+            p_matrix = u_vectors.transpose()
+        else:
+            t_matrix = u_vectors @ s_matrix
+            p_matrix = v_vectors.transpose()
+
         for el in range(len(t_matrix)):
             t_matrix[el] = list(t_matrix[el])
         for el in range(len(p_matrix)):

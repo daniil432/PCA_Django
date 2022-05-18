@@ -72,7 +72,7 @@ def test(request, header, condition, param):
                     print(x_y_data, type(x_y_data))
                     x_y_dataJSON = dumps(x_y_data)
                     context = {'form': form, 'buttons': ButtonTemplate, 'data': selected_numbers,
-                               'condition': condition, 'header': header, 'x_y_data': x_y_dataJSON}
+                               'condition': condition, 'header': header, 'x_y_data': x_y_dataJSON, 'param': param}
                     return render(request, 'Graph_App/GraphWindow.html', context)
             except:
                 selected_numbers = 'Ошибка'
@@ -89,7 +89,7 @@ def test(request, header, condition, param):
         print(x_y_data, type(x_y_data))
         x_y_dataJSON = dumps(x_y_data)
         context = {'form': form, 'buttons': ButtonTemplate, 'data': selected_numbers,
-                   'condition': condition, 'header': header, 'x_y_data': x_y_dataJSON}
+                   'condition': condition, 'header': header, 'x_y_data': x_y_dataJSON, 'param': param}
         return render(request, 'Graph_App/GraphWindow.html', context)
     else:
         form = NumberForm()
@@ -129,8 +129,9 @@ def ProcessData(request):
     t_matrix, p_matrix = test_4.t_and_p_matrix()
     t_matrix = list(t_matrix)
     p_matrix = list(p_matrix)
+    p_matrix.insert(0, all_samples_for_derivative[0])
     "Посчитаем производную от входной матрицы"
-    test_5 = Derivative(input_matrix)
+    test_5 = Derivative(all_samples_for_derivative)
     first_deriv = test_5.calc_derivative()
     "Посчитаем вторую производную от входной матрицы"
     test_5 = Derivative(first_deriv)
@@ -145,7 +146,6 @@ def ChooseTypeOfGraph(request, param, selected_numbers):
     unknown = [[], []]
     x_y_data = {}
     filenames = request.session['filenames']
-    print(param)
     if (param == 1) or (param == 3):
         selected_matrix = request.session['t_matrix']
         if param == 3:
@@ -186,7 +186,11 @@ def ChooseTypeOfGraph(request, param, selected_numbers):
             x_y_data = {"donor": donor_col, "myeloma": mm_col, "non_myeloma": non_mm_col, "unknown": unknown}
     elif param == 2:
         selected_matrix = request.session['p_matrix']
-        x_y_data = {"x": selected_matrix[selected_numbers[0] - 1], "y": selected_matrix[selected_numbers[1] - 1]}
+        if selected_numbers[0] == 0:
+            selected_numbers[0] = 1
+            x_y_data = {"x": selected_matrix[0], "y": selected_matrix[selected_numbers[0]]}
+        else:
+            x_y_data = {"x": selected_matrix[0], "y": selected_matrix[selected_numbers[0]]}
     elif param == 4:
         selected_matrix = request.session['calculated_average']
         donor_col[0], donor_col[1] = selected_matrix['donor'], selected_matrix['donor_waves']

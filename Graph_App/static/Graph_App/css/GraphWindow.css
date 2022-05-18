@@ -1,0 +1,39 @@
+.MainFuncDiv {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.FuncDiv {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: solid black 1px;
+}
+
+.ButtonDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    border: solid black 1px;
+    padding: 7vh 1%;
+    height: 40vh;
+}
+
+.PlotAndInputDiv {
+    display: flex;
+    flex-direction: column;
+}
+
+.InputForm {
+    margin: 0 auto;
+}
+
+.PlotDiv {
+    width: 70vw;
+    height: 40vh;
+}
+
+.InputDiv {
+}
