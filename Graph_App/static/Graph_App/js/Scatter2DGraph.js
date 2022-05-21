@@ -1,7 +1,8 @@
-for (var x in x_y_data) {
-    var xArray = x_y_data[x][0];
-    var yArray = x_y_data[x][1];
-    var temp = {
+var data = [];
+for (let x in x_y_data) {
+    let xArray = x_y_data[x][0];
+    let yArray = x_y_data[x][1];
+    let temp = {
         x: xArray,
         y: yArray,
         mode: "markers",
@@ -21,4 +22,5 @@ var layout = {
 };
 
 // Display using Plotly
+document.getElementById('myPlot').innerHTML = xArray;
 Plotly.newPlot("myPlot", data, layout);

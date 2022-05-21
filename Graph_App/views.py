@@ -74,8 +74,9 @@ def test(request, header, condition, param):
                     context = {'form': form, 'buttons': ButtonTemplate, 'data': selected_numbers,
                                'condition': condition, 'header': header, 'x_y_data': x_y_dataJSON, 'param': param}
                     return render(request, 'Graph_App/GraphWindow.html', context)
-            except:
+            except Exception as error:
                 selected_numbers = 'Ошибка'
+                print(error)
             context = {'form': form, 'buttons': ButtonTemplate, 'data': selected_numbers, 'condition': condition, 'header': header}
             return render(request, 'Graph_App/GraphWindow.html', context)
         else:
@@ -195,34 +196,53 @@ def ChooseTypeOfGraph(request, param, selected_numbers):
         selected_matrix = request.session['calculated_average']
         donor_col[0], donor_col[1] = selected_matrix['donor'], selected_matrix['donor_waves']
         mm_col[0], mm_col[1] = selected_matrix['patient'], selected_matrix['patient_waves']
-        non_mm_col[0], non_mm_col[1] = selected_matrix['non_secreting'], selected_matrix['non_secreting']
+        non_mm_col[0], non_mm_col[1] = selected_matrix['non_secreting'], selected_matrix['non_secreting_waves']
         x_y_data = {"donor": donor_col, "myeloma": mm_col, "non_myeloma": non_mm_col, "unknown": unknown}
         print(x_y_data)
     elif param == 5:
+        # выбрали матрицу с посчитанными для пациентов значениями
         selected_matrix = request.session['calculated_samples']
+        # создаём пустые списки для миеломных и несекретирующих, в которые поместим пациентов с выбранным номером
         mm_name = []
         non_name = []
+        un_name = []
+        # проходимся по списку имён файлов, выбираем из него миеломных и несекретирующих, помещаем в созданные списки
         for name in range(len(filenames)):
-            print(filenames[name][0])
             if (filenames[name][0] == 'D') or (filenames[name][0] == 'H'):
                 pass
             elif (filenames[name][0] == 'M') or (filenames[name][0] == 'P'):
                 mm_name.append(filenames[name])
             elif (filenames[name][0] == "N") or (filenames[name][0:3] == "Non"):
                 non_name.append(filenames[name])
-        for i in range(len(mm_name)):
-            for num in selected_numbers:
-                print(mm_name[i][1:], num)
-                try:
-                    if (mm_name[i][1:] == num):
-                        mm_col[0].append(selected_matrix['patient'][i])
-                        mm_col[1].append(selected_matrix['patient_waves'][i])
-                    elif (non_name[i][1:] == num):
-                        non_mm_col[0].append(selected_matrix['non_secreting'][i])
-                        non_mm_col[1].append(selected_matrix['non_secreting_waves'][i])
-                    else:
-                        pass
-                except:
-                    pass
+            else:
+                un_name.append(filenames[name])
+        # проходимся по только что заполненным спискам, чтобы выбрать из них пациентов с нужным номером
+        donor_col[0].append(request.session['calculated_average']['donor'])
+        donor_col[1].append(request.session['calculated_average']['donor_waves'])
+        donor_col.append(['D'])
+        mm_col = compare('m', mm_name, selected_matrix, selected_numbers)
+        non_mm_col = compare('n', non_name, selected_matrix, selected_numbers)
+        unknown = compare('u', un_name, selected_matrix, selected_numbers)
         x_y_data = {"donor": donor_col, "myeloma": mm_col, "non_myeloma": non_mm_col, "unknown": unknown}
     return x_y_data
+
+
+def compare(type, names, matrix, numbers):
+    print(numbers)
+    result = [[], [], []]
+    selected_names = []
+    if type == 'm':
+        key = 'patient'
+    elif type == 'n':
+        key = 'non_secreting'
+    else:
+        key = 'unknown'
+    for i in range(len(names)):
+        for num in numbers:
+            if names[i][1:] == str(num):
+                result[0].append(matrix[key][i])
+                result[1].append(matrix[key + '_waves'][i])
+                result[2].append(names[i])
+            else:
+                pass
+    return result

@@ -24,6 +24,8 @@
 .PlotAndInputDiv {
     display: flex;
     flex-direction: column;
+    min-width: 70vw;
+    min-height: 40vh;
 }
 
 .InputForm {

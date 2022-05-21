@@ -1,8 +1,9 @@
-for (var x in x_y_data) {
-    var xArray = x_y_data[x][0];
-    var yArray = x_y_data[x][1];
-    var zArray = x_y_data[x][2];
-    var temp = {
+var data = [];
+for (let x in x_y_data) {
+    let xArray = x_y_data[x][0];
+    let yArray = x_y_data[x][1];
+    let zArray = x_y_data[x][2];
+    let temp = {
         x: xArray,
         y: yArray,
         z: zArray,
@@ -22,12 +23,19 @@ for (var x in x_y_data) {
 
 // Define Layout
 var layout = {
+    autosize: false,
+    width: 1000,
+    height: 1000,
     xaxis: xtitle,
     yaxis: ytitle,
     zaxis: ztitle,
     title: maintitle,
-    width: 1200,
-    height: 370,
+    margin: {
+        l: 0,
+        r: 0,
+        b: 0,
+        t: 0
+    }
 };
 
 // Display using Plotly

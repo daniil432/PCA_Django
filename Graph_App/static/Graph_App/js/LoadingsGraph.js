@@ -1,3 +1,4 @@
+var data = [];
 var xArray = x_y_data['x'];
 var yArray = x_y_data['y'];
 var temp = {

@@ -39,54 +39,64 @@
                             <button class="SubmitButton" type="submit" style="height: 26px">Ok</button>
                         </div>
                     </form>
-                    <p style="height: 2vh; text-align: center;">
-                        {{ data }}
-                    </p>
                     <div class="PlotDiv">
                         <div class="Plot" id="myPlot">
-                        {% if data %}
-                            {% load static %}
-                            <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-                            {% if param == 1 %}
-                                <script>
-                                    var x_y_data = JSON.parse('{{x_y_data|escapejs}}');
-                                    var data = [];
-                                    var xtitle = {title: "PC{{ data.0 }}"};
-                                    var ytitle = {title: "PC{{ data.1 }}"};
-                                    var maintitle = "Graph in PC{{ data.0 }}-PC{{ data.1 }} coordinates"
-                                </script>
-                                <script type="text/javascript"
-                                        src={% static "Graph_App/js/Scatter2DGraph.js" %}></script>
-                            {% elif param == 2 %}
-                                <script>
-                                    var x_y_data = JSON.parse('{{x_y_data|escapejs}}');
-                                    var data = [];
-                                    var xtitle = {title: "Wavenumbers"};
-                                    var ytitle = {title: "PC{{ data.0 }}"};
-                                    var maintitle = "Graph for PC{{ data.0 }} loadings to wavenumbers."
-                                </script>
-                                <script type="text/javascript"
-                                        src={% static "Graph_App/js/LoadingsGraph.js" %}></script>
-                            {% elif param == 3 %}
-                                <script>
-                                    var x_y_data = JSON.parse('{{x_y_data|escapejs}}');
-                                    var data = [];
-                                    var xtitle = {title: "PC{{ data.0 }}"};
-                                    var ytitle = {title: "PC{{ data.1 }}"};
-                                    var ztitle = {title: "PC{{ data.2 }}"};
-                                    var maintitle = "Graph in PC{{ data.0 }}-PC{{ data.1 }}-PC{{ data.2 }} coordinates"
-                                </script>
-                                <script type="text/javascript"
-                                        src={% static "Graph_App/js/Scatter3DGraph.js" %}></script>
+                            {% if data %}
+                                {% load static %}
+                                <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+                                {% if param == 1 %}
+                                    <script>
+                                        var x_y_data = JSON.parse('{{x_y_data|escapejs}}');
+                                        var xtitle = {title: "PC{{ data.0 }}"};
+                                        var ytitle = {title: "PC{{ data.1 }}"};
+                                        var maintitle = "Graph in PC{{ data.0 }}-PC{{ data.1 }} coordinates"
+                                    </script>
+                                    <script type="text/javascript"
+                                            src={% static "Graph_App/js/Scatter2DGraph.js" %}></script>
+                                {% elif param == 2 %}
+                                    <script>
+                                        var x_y_data = JSON.parse('{{x_y_data|escapejs}}');
+                                        var xtitle = {title: "Wavenumbers"};
+                                        var ytitle = {title: "PC{{ data.0 }}"};
+                                        var maintitle = "Graph for PC{{ data.0 }} loadings to wavenumbers."
+                                    </script>
+                                    <script type="text/javascript"
+                                            src={% static "Graph_App/js/LoadingsGraph.js" %}></script>
+                                {% elif param == 3 %}
+                                    <script>
+                                        var x_y_data = JSON.parse('{{x_y_data|escapejs}}');
+                                        var xtitle = {title: "PC{{ data.0 }}"};
+                                        var ytitle = {title: "PC{{ data.1 }}"};
+                                        var ztitle = {title: "PC{{ data.2 }}"};
+                                        var maintitle = "Graph in PC{{ data.0 }}-PC{{ data.1 }}-PC{{ data.2 }} coordinates"
+                                    </script>
+                                    <script type="text/javascript"
+                                            src={% static "Graph_App/js/Scatter3DGraph.js" %}></script>
+                                {% elif param == 5 %}
+                                    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+                                    <script>
+                                        var x_y_data = JSON.parse('{{x_y_data|escapejs}}');
+                                    </script>
+                                    <script type="text/javascript"
+                                            src={% static "Graph_App/js/PatientBar.js" %}></script>
+                                {% endif %}
                             {% endif %}
-
-                        {% endif %}
                         </div>
                     </div>
 
                 {% elif condition == 0 %}
                     <div class="PlotDiv">
                         <div class="Plot" id="myPlot"></div>
+                        {% if param == 4 %}
+                            <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+                            <script>
+                                var x_y_data = JSON.parse('{{x_y_data|escapejs}}');
+                            </script>
+                            <script type="text/javascript"
+                                    src={% static "Graph_App/js/AverageBar.js" %}></script>
+                        {% else %}
+                            <p>Что-то не так</p>
+                        {% endif %}
                     </div>
                 {% endif %}
             </div>
